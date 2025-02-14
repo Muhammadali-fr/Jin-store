@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+.sign-up {
+  background-image: url(./assets/signup-bg.png);
+  background-position: center;
+  background-size: cover;
+}

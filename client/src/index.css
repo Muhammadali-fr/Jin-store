@@ -5,3 +5,9 @@
   background-position: center;
   background-size: cover;
 }
+
+.login {
+  background-image: url(./assets/login-bg.png);
+  background-position: center;
+  background-size: cover;
+}

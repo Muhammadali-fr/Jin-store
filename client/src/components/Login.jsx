@@ -14,7 +14,7 @@ const Signup = () => {
                 <small>You can login with google.</small>
                 <button className='rounded hover:bg-red-400 p-2 border-none bg-red-500 hover:text-white cursor-pointer' type='button'>Google</button>
                 <Link to="/sign-up">
-                    <p>You don't have an account racer, I got you go to <span className='text-blue-400 underline'>sign up</span>.</p>
+                    <p>You don't have an account racer, I got you <span className='text-blue-400 underline'>sign up</span> first.</p>
                 </Link>
             </form>
 

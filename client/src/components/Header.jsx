@@ -17,6 +17,7 @@ const Header = () => {
         <img className="relative right-8 cursor-pointer" src={Search} alt="search" />
       </div>
 
+      <Link to="/sign-up"  className="hover:bg-gray-200 p-1 px-4 rounded">
         <div className="flex items-center justify-center gap-1">
           <img src={user} alt="user" />
           <div>
@@ -24,14 +25,15 @@ const Header = () => {
             <p className="font-bold">Account</p>
           </div>
         </div>
+      </Link>
 
-        <Link>
-          <img src={heart} alt="heart" />
-        </Link>
+      <Link>
+        <img src={heart} alt="heart" />
+      </Link>
 
-        <Link>
-          <img src={bag} alt="bag" />
-        </Link>
+      <Link>
+        <img src={bag} alt="bag" />
+      </Link>
     </nav>
   )
 }

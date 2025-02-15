@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/auth.route");
 
 // const
 
@@ -14,6 +15,8 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/auth", authRoutes);
 
 app.use(
   cors({

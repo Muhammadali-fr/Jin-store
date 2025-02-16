@@ -1,8 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+// toast 
+import toast from "react-hot-toast"
 
 const Signup = () => {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,7 +19,8 @@ const Signup = () => {
                 email,
                 password
             })
-            alert(response.data.message);
+            toast.success(response.data.message);
+            navigate("/");
         } catch (error) {
             alert("you can't  logged in", error);
         }

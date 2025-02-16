@@ -10,11 +10,17 @@ router.use(cookie());
 
 const register = async (req, res) => {
   try {
+    const password = req.body.password;
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).json({ message: "Email already taken." });
 
+    if (password.length < 6)
+      return res
+        .status(401)
+        .json({ message: "Password must be at least 6 characters." });
+
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     user = new User({
       name: req.body.name,

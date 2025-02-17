@@ -79,4 +79,28 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const profile = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(404).json({ message: "token topilmadi." });
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, userData) => {
+      if (err) return res.status(401).json({ err, message: "yaroqsiz token." });
+
+      try {
+        const user = await User.findById(userData.id);
+        if (!user) return res.status(404).json({ message: "user topilmadi" });
+
+        const { _id, name, email } = user;
+
+        res.status(200).json({ _id, name, email });
+      } catch (error) {
+        res.status(404).json({ error, message: "user topilmadi error" });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error, message: "error in profile," });
+  }
+};
+
+module.exports = { register, login, profile };

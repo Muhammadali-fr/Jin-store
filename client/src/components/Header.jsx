@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-// toast
 import toast from "react-hot-toast";
 
-// ui 
+// ui
 import {
   Modal,
   ModalContent,
@@ -14,13 +12,12 @@ import {
   useDisclosure,
 } from "@heroui/react";
 
-// assets 
+// Assets 
 import EmailSvg from "../assets/email.png";
 import googleSvg from "../assets/google.png";
 
 const Header = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -44,9 +41,9 @@ const Header = () => {
       );
       onOpenChange(false);
     } catch (error) {
-      toast.error(error.response.data.message || "email isn't found.");
+      toast.error(error.response?.data?.message || "Email isn't found.");
     }
-  }
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -57,6 +54,10 @@ const Header = () => {
         password,
       });
 
+      toast("You signed up successfully. Please log in.", {
+        duration: 6000,
+      });
+
       toast.promise(
         new Promise((resolve) => setTimeout(() => resolve(response.data.message), 800)),
         {
@@ -65,69 +66,96 @@ const Header = () => {
           error: "Could not create account.",
         }
       );
-
       setLogin(true);
-      onOpenChange(false);
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong.");
     }
   };
 
   const navigateSignUp = () => {
-    if (login) {
-      setLogin(false);
-    } else {
-      setLogin(true);
-    }
-  }
+    setLogin(!login);
+  };
 
   return (
-    <nav className="container mx-auto flex items-center justify-between gap-3 py-5" >
-      <Link to="/">
-        <h1>Logo</h1>
-      </Link>
+    <nav className="container mx-auto">
+      <div className="flex items-center justify-between gap-3 p-2">
+        <Link to="/">
+          <h1>Logo</h1>
+        </Link>
 
-      <Button className="bg-violet-700 text-white rounded px-7" onPress={onOpen}>Login</Button>
+        <ul className="flex items-center justify-center gap-3">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className=" rounded-2xl shadow-xl border border-gray-400 bg-gray-100">
-          {(
-            <ModalBody>
-              {login ? (<form onSubmit={handleSubmit} className='rounded flex backdrop-blur-m py-5 align-items-center justify-start flex-col gap-5'>
-                <Link to="/">
-                  <p className='text-4xl font-extrabold text-center font-hello'>Hello!</p>
-                </Link>
-                <p className="text-gray-600 text-center">Welcome back racer.</p>
-                <input autoFocus value={email} onChange={(e) => setEmail(e.target.value)} className=' border border-gray-300 p-3 rounded-2xl' placeholder='exemple@gmail.com' type="email" />
-                <input value={password} onChange={(e) => setPassword(e.target.value)} className=' border border-gray-300 rounded-2xl p-3' placeholder='password' type="password" />
-                <button className='bg-[#2c2f44] hover:bg-gray-500 border text-white font-bold border-none py-3 rounded-2xl cursor-pointer flex items-center justify-between p-5 font-hello' type='submit'> <img className="w-5" src={EmailSvg} alt="google" /> Sign in <span></span></button>
-                <small className="text-gray-700">You can login with google.</small>
-                <button className='bg-[#D0D2DE] hover:bg-gray-200 py-3 rounded-2xl border-none text-black cursor-pointer flex items-center justify-between p-5 font-extrabold font-hello' type='button'> <img className="w-5" src={googleSvg} alt="email" />Continue with Google <span></span></button>
-                <div className="cursor-pointer" onClick={() => navigateSignUp()}>
-                  <p className="text-gray-700">You don't have an account racer ?  I got you <span className='text-black underline'>sign up</span> first.</p>
-                </div>
-              </form>)
-                :
-                (<form onSubmit={(e) => handleSignUp(e)} className='rounded flex py-5 align-items-center justify-start flex-col gap-5'>
-                  <Link to="/">
-                    <p className='text-3xl font-bold'>Sign-up</p>
-                  </Link>
-                  <input required value={name} onChange={e => setName(e.target.value)} className=' border border-gray-300 p-2 rounded' placeholder='Muhammadali' type="text" />
-                  <input required value={email} onChange={e => setEmail(e.target.value)} className=' border border-gray-300 p-2 rounded' placeholder='exemple@gmail.com' type="email" />
-                  <input required value={password} onChange={e => setPassword(e.target.value)} className=' border border-gray-300 p-2 rounded' placeholder='password' type="password" />
-                  <button className='bg-gray-300 border text-black border-none p-2 rounded hover:bg-gray-200 cursor-pointer' type='submit'>Sign up</button>
-                  <small>You can sign up with google.</small>
-                  <button className='rounded hover:bg-red-400 p-2 border-none bg-red-500 text-white cursor-pointer' type='button'>Google</button>
-                  <div className="cursor-pointer" onClick={() => navigateSignUp()}>
-                    <p>Already have an account <span className='text-blue-400 underline'>sign up</span>.</p>
-                  </div>
-                </form>)}
-            </ModalBody>
-          )}
-        </ModalContent>
-      </Modal>
+        <Button className="bg-violet-700 text-white rounded px-7" onPress={onOpen}>Login</Button>
+      </div>
+
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/20  flex items-center justify-center z-50">
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent className="rounded-2xl shadow-xl border border-gray-400 bg-white">
+              <ModalBody>
+                {login ? (
+                  <form onSubmit={handleSubmit} className="rounded flex py-5 flex-col gap-5">
+                    <p className="text-4xl font-extrabold text-center">Hello!</p>
+                    <p className="text-gray-600 text-center">Welcome back racer.</p>
+                    <input
+                      autoFocus
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="border border-gray-300 p-3 rounded-2xl"
+                      placeholder="example@gmail.com"
+                      type="email"
+                    />
+                    <input
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="border border-gray-300 rounded-2xl p-3"
+                      placeholder="password"
+                      type="password"
+                    />
+                    <button className="bg-[#2c2f44] hover:bg-gray-500 text-white font-bold py-3 rounded-2xl cursor-pointer flex items-center justify-center p-5" type="submit">
+                      <img className="w-5 mr-2" src={EmailSvg} alt="email" /> Sign in
+                    </button>
+                    <small className="text-gray-700">You can login with Google.</small>
+                    <button className="bg-[#D0D2DE] hover:bg-gray-200 py-3 rounded-2xl text-black cursor-pointer flex items-center justify-center p-5 font-extrabold" type="button">
+                      <img className="w-5 mr-2" src={googleSvg} alt="google" /> Continue with Google
+                    </button>
+                    <div className="cursor-pointer" onClick={navigateSignUp}>
+                      <p className="text-gray-700">
+                        Don't have an account? <span className="text-black underline">Sign up</span> first.
+                      </p>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleSignUp} className="rounded flex py-5 flex-col gap-5">
+                    <p className="text-4xl font-extrabold text-center">Sign-up</p>
+                    <p className="text-center text-gray-500">Continue with email.</p>
+                    <input required value={name} onChange={e => setName(e.target.value)} className="border border-gray-300 p-3 rounded-2xl" placeholder="Your Name" type="text" />
+                    <input required value={email} onChange={e => setEmail(e.target.value)} className="border border-gray-300 p-3 rounded-2xl" placeholder="example@gmail.com" type="email" />
+                    <input required value={password} onChange={e => setPassword(e.target.value)} className="border border-gray-300 p-3 rounded-2xl" placeholder="password" type="password" />
+                    <button className="bg-[#2c2f44] hover:bg-gray-500 text-white font-bold py-3 rounded-2xl cursor-pointer flex items-center justify-center p-5" type="submit">
+                      <img className="w-5 mr-2" src={EmailSvg} alt="email" /> Sign up
+                    </button>
+                    <small className="text-gray-500">You can sign up with Google.</small>
+                    <button className="bg-[#D0D2DE] hover:bg-gray-200 py-3 rounded-2xl text-black cursor-pointer flex items-center justify-center p-5 font-extrabold" type="button">
+                      <img className="w-5 mr-2" src={googleSvg} alt="google" /> Continue with Google
+                    </button>
+                    <div className="cursor-pointer" onClick={navigateSignUp}>
+                      <p className="text-gray-500">
+                        Already have an account? <span className="text-black underline">Sign in</span>.
+                      </p>
+                    </div>
+                  </form>
+                )}
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </div>
+      )}
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

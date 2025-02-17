@@ -4,6 +4,7 @@ import axios from "axios";
 // Component
 import MainLayout from './layout/MainLayout';
 import SidebarLayout from './layout/SidebarLayout';
+import Profile from './components/Profile';
 
 // toast 
 axios.defaults.baseURL = "http://localhost:5000/";
@@ -18,7 +19,13 @@ const App = () => {
       children: [
         {
           index: true,
-          element: <SidebarLayout />
+          element: <SidebarLayout />,
+          children: [
+            {
+              path: "/profile",
+              element: <Profile />
+            }
+          ]
         }
       ]
     }

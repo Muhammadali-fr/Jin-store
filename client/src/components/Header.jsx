@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -17,6 +17,9 @@ import {
 import EmailSvg from "../assets/email.png";
 import googleSvg from "../assets/google.png";
 
+// context 
+import { UserContext } from "../userContext";
+
 
 const Header = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -25,6 +28,7 @@ const Header = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(true);
+  const { user } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +82,6 @@ const Header = () => {
     setLogin(!login);
   };
 
-
   return (
     <nav className="container mx-auto">
       <div className="flex items-center justify-between gap-3 p-2">
@@ -91,7 +94,10 @@ const Header = () => {
           <li><Link to="/about">About</Link></li>
         </ul>
 
-        <Button className="bg-violet-700 text-white rounded px-7" onPress={onOpen}>Login</Button>
+        {!user &&
+          <Button className="bg-violet-700 text-white rounded px-7" onPress={onOpen}>Login</Button>
+        }
+        
       </div>
 
       {isOpen && (

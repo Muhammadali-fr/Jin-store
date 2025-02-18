@@ -10,6 +10,9 @@ import Profile from './components/Profile';
 axios.defaults.baseURL = "http://localhost:5000/";
 axios.defaults.withCredentials = true;
 
+// context 
+import { UserProvider } from './userContext';
+
 const App = () => {
 
   const router = createBrowserRouter([
@@ -21,7 +24,9 @@ const App = () => {
 
   return (
     <div>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </div>
   )
 }

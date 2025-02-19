@@ -7,18 +7,15 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const data = await axios.get("/api/auth/profile", { withCredentials: true });
-                console.log("Foydalanuvchi ma’lumoti:", data);
+        axios.get("/api/auth/profile")
+            .then(({ data }) => {
                 setUser(data);
-            } catch (error) {
-                console.error("Profil ma’lumotlarini olishda xatolik:", error);
-            }
-        };
-
-        fetchUser();
-    }, []);
+            })
+            .catch((error) => {
+                console.error("Error fetching user:", error);
+                setUser(null);
+            });
+    }, []); // `[]` qoldi, chunki `useEffect` faqat bir marta ishga tushishi kerak
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

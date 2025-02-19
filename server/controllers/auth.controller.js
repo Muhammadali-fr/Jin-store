@@ -69,7 +69,12 @@ const login = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true, // JavaScript orqali o‘qib bo‘lmaydi
+      secure: true, // Faqat HTTPSda ishlaydi
+      sameSite: "strict", // CSRF hujumlaridan himoya qiladi
+      maxAge: 24 * 60 * 60 * 1000, // 1 kun
+    });
 
     res.status(200).json({ message: "Login successfully." });
   } catch (error) {

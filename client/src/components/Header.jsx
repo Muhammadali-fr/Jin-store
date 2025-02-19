@@ -46,6 +46,8 @@ const Header = () => {
         }
       );
       onOpenChange(false);
+      window.location.reload();
+
     } catch (error) {
       toast.error(error.response?.data?.message || "Email isn't found.");
     }
@@ -73,6 +75,8 @@ const Header = () => {
         }
       );
       setLogin(true);
+      window.location.reload();
+
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong.");
     }
@@ -97,7 +101,7 @@ const Header = () => {
         {!user &&
           <Button className="bg-violet-700 text-white rounded px-7" onPress={onOpen}>Login</Button>
         }
-        
+
       </div>
 
       {isOpen && (

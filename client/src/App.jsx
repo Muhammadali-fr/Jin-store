@@ -12,13 +12,20 @@ axios.defaults.withCredentials = true;
 
 // context 
 import { UserProvider } from './userContext';
+import Cards from './components/Cards';
 
 const App = () => {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <Cards />
+        }
+      ]
     }
   ])
 

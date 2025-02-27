@@ -1,40 +1,53 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import axios from "axios";
+// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import axios from "axios";
 
-// Component
-import MainLayout from './layout/MainLayout';
-import SidebarLayout from './layout/SidebarLayout';
-import Profile from './components/Profile';
+// // Component
+// import MainLayout from './layout/MainLayout';
+// import SidebarLayout from './layout/SidebarLayout';
+// import Profile from './components/Profile';
 
-// toast 
-axios.defaults.baseURL = "http://localhost:5000/";
-axios.defaults.withCredentials = true;
+// // toast 
+// axios.defaults.baseURL = "http://localhost:5000/";
+// axios.defaults.withCredentials = true;
 
-// context 
-import { UserProvider } from './userContext';
-import Cards from './components/Cards';
+// // context 
+// import { UserProvider } from './userContext';
+// import Cards from './components/Cards';
+
+// const App = () => {
+
+//   const router = createBrowserRouter([
+//     {
+//       path: "/",
+//       element: <MainLayout />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Cards />
+//         }
+//       ]
+//     }
+//   ])
+
+//   return (
+//     <div>
+//       <UserProvider>
+//         <RouterProvider router={router} />
+//       </UserProvider>
+//     </div>
+//   )
+// }
+
+// export default App
+
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 const App = () => {
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout />,
-      children: [
-        {
-          index: true,
-          element: <Cards />
-        }
-      ]
-    }
-  ])
-
+  const {list, text} = useSelector((state) => state.todo)
+  
   return (
-    <div>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </div>
+    < div > {text}</div>
   )
 }
 

@@ -109,7 +109,7 @@ const Header = () => {
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent className="rounded-2xl shadow-xl border border-gray-400 bg-white">
               <ModalBody>
-                {login ? (
+                {login ? (  
                   <form onSubmit={handleSubmit} className="rounded flex py-5 flex-col gap-5">
                     <p className="text-4xl font-extrabold text-center">Hello!</p>
                     <p className="text-gray-600 text-center">Welcome back racer.</p>
